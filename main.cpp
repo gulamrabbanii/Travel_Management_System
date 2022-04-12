@@ -122,6 +122,58 @@ public:
     int chooseHotel, choosePack;
     float hotelCost;
 
+    void hotelDetails(int hotelChoice)
+    {
+        std::string hotelName;
+        if (hotelChoice == 1)
+            hotelName = "Avendra";
+        else if (hotelChoice == 2)
+            hotelName = "ChoiceYou";
+        else
+            hotelName = "Elephant Bay";
+
+        std::cout << "The Garden, food and beverage. Enjoy all you can drink, Stay cool and get chilled in the summer sun." << std::endl;
+        std::cout << "Package offered by " << hotelName << ":" << std::endl;
+        std::cout << "1. Standard Pack" << std::endl;
+        std::cout << "\tAll basic facilities you need just for Rs.5000.00" << std::endl;
+        std::cout << "2. Premium Pack" << std::endl;
+        std::cout << "\tEnjoy Premium: Rs .10000.00 " << std::endl;
+        std::cout << "3. Luxury Pack" << std::endl;
+        std::cout << "\tLive a Luxury at " << hotelName << ": Rs.15000.00" << std::endl;
+
+        std::cout << "\nPress another key to go back or\nEnter package number you want to book: ";
+        std::cin >> choosePack;
+        switch (choosePack)
+        {
+        case 1:
+            hotelCost = 5000.00;
+            std::cout << "\nYou have successfully booked Standard Pack at " << hotelName << std::endl;
+            std::cout << "Goto Menu and take the receipt" << std::endl;
+            break;
+        case 2:
+            hotelCost = 10000.00;
+            std::cout << "\nYou have successfully booked Premium Pack at " << hotelName << std::endl;
+            std::cout << "Goto Menu and take the receipt" << std::endl;
+            break;
+        case 3:
+            hotelCost = 15000.00;
+            std::cout << "\nYou have successfully booked Luxury Pack at " << hotelName << std::endl;
+            std::cout << "Goto Menu and take the receipt" << std::endl;
+            break;
+        default:
+            std::cout << "Invalid Input! Redirecting to Previous Menu\nPlease Wait..." << std::endl;
+            Sleep(1100);
+            system("CLS");
+            hotels();
+            int gotomenu;
+            std::cout << "Press 1 to Go to Main menu: ";
+            std::cin >> gotomenu;
+            if (gotomenu == 1)
+                menu();
+            else
+                menu();
+        }
+    }
     void hotels()
     {
         std::string hotelNo[] = {"Avendra", "ChoiceYou", "ElephantBay"};
@@ -137,9 +189,12 @@ public:
         switch (chooseHotel)
         {
         case 1:
-            std::cout << "";
+            std::cout << "------------------WELCOME TO HOTEL AVENDRA------------------" << std::endl;
+            hotelDetails(chooseHotel);
             break;
         case 2:
+            std::cout << "------------------WELCOME TO HOTEL CHOICEYOU------------------" << std::endl;
+            hotelDetails(chooseHotel);
             break;
         case 3:
             break;
