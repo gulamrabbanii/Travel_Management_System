@@ -394,9 +394,9 @@ void menu()
         }
         break;
     case 5:
-        std::cout << "--GOOD-BYE--" << std::endl;
-        Sleep(999);
-        menu();
+        std::cout << "------------GOOD-BYE------------" << std::endl;
+        Sleep(1999);
+        exit(0);
         break;
     default:
         std::cout << "Invalid Input! Redirecting to Previous Menu\nPlease Wait..." << std::endl;
