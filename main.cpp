@@ -5,6 +5,22 @@
 
 void menu();
 
+class ManageMenu
+{
+protected:
+    std::string userName;
+
+public:
+    ManageMenu()
+    {
+        std::cout << "\n\n\n\n\tEnter Your Name to Continue as an Admin: ";
+        std::cin >> userName;
+        system("CLS");
+        menu();
+    }
+    ~ManageMenu() {}
+};
+
 class Customers
 {
 public:
@@ -366,7 +382,7 @@ void menu()
 
 int main()
 {
-    menu();
+    ManageMenu start;
 
     return 0;
 }
