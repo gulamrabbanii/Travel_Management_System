@@ -3,11 +3,14 @@
 #include <iomanip>
 #include <windows.h>
 
+void menu();
+
 class Customers
 {
 public:
     std::string name, gender, address;
-    int age, mobileNo, cusID;
+    int age, mobileNo;
+    static int cusID;
     char all[999];
 
     void getDetails()
@@ -51,11 +54,13 @@ public:
     }
 };
 
+int Customers::cusID;
 class Cabs
 {
 public:
     int cabChoice, kilometers;
-    float cabCost, lastCabCost;
+    float cabCost;
+    static float lastCabCost;
 
     void cabDetails()
     {
@@ -85,7 +90,7 @@ public:
             case 1:
                 lastCabCost = cabCost;
                 std::cout << "\nYou have successfully hired a Standard Cab" << std::endl;
-                std::cout << "Goto Menu and take the receipt" << endl;
+                std::cout << "Goto Menu and take the receipt" << std::endl;
                 break;
             case 2:
                 cabDetails();
@@ -116,11 +121,12 @@ public:
     }
 };
 
+float Cabs::lastCabCost;
 class Booking
 {
 public:
     int chooseHotel, choosePack;
-    float hotelCost;
+    static float hotelCost;
 
     void hotelDetails(int hotelChoice)
     {
@@ -193,23 +199,174 @@ public:
             hotelDetails(chooseHotel);
             break;
         case 2:
-            std::cout << "------------------WELCOME TO HOTEL CHOICEYOU------------------" << std::endl;
+            std::cout << "-----------------WELCOME TO HOTEL CHOICE_YOU----------------" << std::endl;
             hotelDetails(chooseHotel);
             break;
         case 3:
+            std::cout << "----------------WELCOME TO HOTEL ELEPHANT_BAY---------------" << std::endl;
+            hotelDetails(chooseHotel);
             break;
         default:
+            std::cout << "Invalid Input! Redirecting to Previous Menu\nPlease Wait..." << std::endl;
+            Sleep(1100);
+            system("CLS");
+            hotels();
             break;
         }
+        int gotomenu;
+        std::cout << "Press 1 to Go to Main menu: ";
+        std::cin >> gotomenu;
+        if (gotomenu == 1)
+            menu();
+        else
+            menu();
     }
 };
 
-class Charges
+float Booking::hotelCost;
+class Charges : public Booking, Cabs, Customers
 {
+public:
+    void printBill()
+    {
+        std::ofstream outf("receipt.txt");
+        {
+            outf << "------------------ABC Travel Agency------------------" << std::endl;
+            outf << "-----------------------Receipt-----------------------" << std::endl;
+            outf << "_____________________________________________________" << std::endl;
+            outf << "Customer ID: " << Customers::cusID << std::endl
+                 << std::endl;
+            outf << "Description\t\t Total" << std::endl;
+            outf << "Hotel cost:\t\t" << std::fixed << std::setprecision(2) << Booking::hotelCost << std::endl;
+            outf << "Travel (cab) cost:\t" << std::fixed << std::setprecision(2) << Cabs::lastCabCost << std::endl;
+            outf << "_____________________________________________________" << std::endl;
+            outf << "Total Charge:\t\t" << std::fixed << std::setprecision(2) << Booking::hotelCost + Cabs::lastCabCost << std::endl;
+            outf << "_____________________________________________________" << std::endl;
+            outf << "----------------------Thank You----------------------" << std::endl;
+        }
+        outf.close();
+    }
+    void showBill()
+    {
+        std::ifstream inf("receipt.txt");
+        {
+            if (!inf)
+            {
+                std::cout << "File opening error!" << std::endl;
+            }
+            while (!(inf.eof()))
+            {
+                inf.getline(all, 999);
+                std::cout << all << std::endl;
+            }
+        }
+        inf.close();
+    }
 };
+
+void menu()
+{
+    int menuChoice, gotoMenu, inChoice;
+
+    std::cout << "\t\t* ABC Travels *\n"
+              << std::endl;
+    std::cout << "------------------------Main Menu------------------------" << std::endl;
+    std::cout << "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ " << std::endl;
+    std::cout << "\t|\t\t\t\t\t|" << std::endl;
+    std::cout << "\t|Customer Management -> 1\t|" << std::endl;
+    std::cout << "\t|Cabs Management     -> 2\t|" << std::endl;
+    std::cout << "\t|Booking Mangement   -> 3\t|" << std::endl;
+    std::cout << "\t|Charges & Bills     -> 4\t|" << std::endl;
+    std::cout << "\t|Exit                -> 5\t|" << std::endl;
+    std::cout << "\t|\t\t\t\t\t|" << std::endl;
+    std::cout << "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ " << std::endl;
+
+    std::cout << "\nEnter Your Choice: ";
+    std::cin >> menuChoice;
+    system("CLS");
+    Customers customer;
+    Cabs cab;
+    Booking book;
+    Charges charge;
+
+    switch (menuChoice)
+    {
+    case 1:
+        std::cout << "---------Customers---------\n"
+                  << std::endl;
+        std::cout << "1. Enter New Customer" << std::endl;
+        std::cout << "2. See Old Customers" << std::endl;
+        std::cin >> inChoice;
+        system("CLS");
+        if (inChoice == 1)
+            customer.getDetails();
+        else if (inChoice == 2)
+            customer.showDetails();
+        else
+        {
+            std::cout << "Invalid Input! Redirecting to Previous Menu\nPlease Wait..." << std::endl;
+            Sleep(1100);
+            system("CLS");
+            menu();
+        }
+        std::cout << "\nPress 1 to Redirect main menu: " << std::endl;
+        std::cin >> gotoMenu;
+        system("CLS");
+        if (gotoMenu == 1)
+            menu();
+        else
+            menu();
+        break;
+
+    case 2:
+        cab.cabDetails();
+        break;
+    case 3:
+        std::cout << "--> Book a luxury Hotel using the system <--" << std::endl;
+        book.hotels();
+        break;
+    case 4:
+        std::cout << "--> Get Your Receipt <--" << std::endl;
+        charge.printBill();
+        std::cout << "Your receipt is already printed. You can get it from file path\n"
+                  << std::endl;
+        std::cout << "To display your receipt in the screen, Enter 1 or\n Enter another key to go back to main menu: ";
+        std::cin >> gotoMenu;
+
+        if (gotoMenu == 1)
+        {
+            system("CLS");
+            charge.showBill();
+            std::cout << "\n Press 1 to redirect main menu: ";
+            std::cin >> gotoMenu;
+            system("CLS");
+            if (gotoMenu == 1)
+                menu();
+            else
+                menu();
+        }
+        else
+        {
+            system("CLS");
+            menu();
+        }
+        break;
+    case 5:
+        std::cout << "--GOOD-BYE--" << std::endl;
+        Sleep(999);
+        menu();
+        break;
+    default:
+        std::cout << "Invalid Input! Redirecting to Previous Menu\nPlease Wait..." << std::endl;
+        Sleep(1100);
+        system("CLS");
+        menu();
+    }
+}
 
 int main()
 {
-    std::cout << "Hello World";
+    menu();
+
     return 0;
 }
