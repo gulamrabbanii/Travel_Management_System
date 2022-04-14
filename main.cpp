@@ -84,7 +84,7 @@ public:
         std::cout << "------------------ABC Cabs------------------" << std::endl;
         std::cout << "1. Rent a Standard Cab - Rs.15/KM" << std::endl;
         std::cout << "2. Rent a Luxury Cab - Rs.25/KM" << std::endl;
-        std::cout << "\nTo calculate the cost for your journey: " << std::endl;
+        std::cout << "\nTo calculate the cost for your journey" << std::endl;
         std::cout << "Enter which kind of cab you need: ";
         std::cin >> cabChoice;
         std::cout << "Enter Kilometers you have to travel: ";
@@ -96,7 +96,7 @@ public:
         case 1:
             cabCost = kilometers * 15;
             std::cout << "\nYour tour cost " << cabCost << " rupees for a standard cab" << std::endl;
-            std::cout << "Press 1 to hire this cab: or";
+            std::cout << "Press 1 to hire this cab or" << std::endl;
             std::cout << "Press 2 to select another cab: ";
             std::cin >> hireCab;
             system("CLS");
@@ -106,6 +106,32 @@ public:
             case 1:
                 lastCabCost = cabCost;
                 std::cout << "\nYou have successfully hired a Standard Cab" << std::endl;
+                std::cout << "Goto Menu and take the receipt" << std::endl;
+                break;
+            case 2:
+                cabDetails();
+                break;
+            default:
+                std::cout << "Invalid Input! Redirecting to previous menu \nPlease Wait " << std::endl;
+                Sleep(999);
+                system("CLS");
+                cabDetails();
+                break;
+            }
+            break;
+        case 2:
+            cabCost = kilometers * 25;
+            std::cout << "\nYour tour cost " << cabCost << " rupees for a standard cab" << std::endl;
+            std::cout << "Press 1 to hire this cab or" << std::endl;
+            std::cout << "Press 2 to select another cab: ";
+            std::cin >> hireCab;
+            system("CLS");
+
+            switch (hireCab)
+            {
+            case 1:
+                lastCabCost = cabCost;
+                std::cout << "\nYou have successfully hired a Luxury Cab" << std::endl;
                 std::cout << "Goto Menu and take the receipt" << std::endl;
                 break;
             case 2:
@@ -284,18 +310,18 @@ void menu()
 {
     int menuChoice, gotoMenu, inChoice;
 
-    std::cout << "\t\t* ABC Travels *\n"
+    std::cout << "\t\t\t* ABC Travels *\n"
               << std::endl;
     std::cout << "------------------------Main Menu------------------------" << std::endl;
-    std::cout << "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ " << std::endl;
-    std::cout << "\t|\t\t\t\t\t|" << std::endl;
+    std::cout << "\t_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _" << std::endl;
+    std::cout << "\t|\t\t\t\t|" << std::endl;
     std::cout << "\t|Customer Management -> 1\t|" << std::endl;
     std::cout << "\t|Cabs Management     -> 2\t|" << std::endl;
     std::cout << "\t|Booking Mangement   -> 3\t|" << std::endl;
     std::cout << "\t|Charges & Bills     -> 4\t|" << std::endl;
     std::cout << "\t|Exit                -> 5\t|" << std::endl;
-    std::cout << "\t|\t\t\t\t\t|" << std::endl;
-    std::cout << "_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ " << std::endl;
+    std::cout << "\t|\t\t\t\t|" << std::endl;
+    std::cout << "\t_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _" << std::endl;
 
     std::cout << "\nEnter Your Choice: ";
     std::cin >> menuChoice;
@@ -346,7 +372,7 @@ void menu()
         charge.printBill();
         std::cout << "Your receipt is already printed. You can get it from file path\n"
                   << std::endl;
-        std::cout << "To display your receipt in the screen, Enter 1 or\n Enter another key to go back to main menu: ";
+        std::cout << "To display your receipt in the screen, Enter 1 or\nEnter another key to go back to main menu: ";
         std::cin >> gotoMenu;
 
         if (gotoMenu == 1)
